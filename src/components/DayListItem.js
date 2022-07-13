@@ -16,7 +16,6 @@ export default function DayListItem(props) {
       
       
     }
-    console.log();
     return (`${spots} spots remaining`);
 
 
