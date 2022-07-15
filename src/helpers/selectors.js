@@ -29,3 +29,22 @@ export function getInterview(state, interview) {
   return interview;
 }
 
+export function getInterviewersForDay(state, day) {
+  let interviewerNumArr = [];
+  const interviewersForDay = [];
+
+  state.days.forEach((data) => {
+    if (day === data.name) {
+      interviewerNumArr = data.interviewers;
+    }
+  });
+
+  interviewerNumArr.forEach((interviewer) => {
+    if (state.appointments[interviewer]) {
+      interviewersForDay.push(state.interviewers[interviewer]); 
+    }
+  });
+
+  return interviewersForDay;
+}
+

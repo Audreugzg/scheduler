@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 import "components/Application.scss";
 import Appointment from "components/Appointment";
@@ -17,6 +17,7 @@ export default function Application(props) {
   });
   const setDay = (day) => setState((prev) => ({...prev,day}));
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const InterviewersForDay = getInterviewersForDay(state, state.day);
   
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function Application(props) {
     id={appointment.id}
     time={appointment.time}
     interview={interview}
-    interviewers = {state.interviewers}
+    interviewers = {InterviewersForDay}
   />
   });
   return (
