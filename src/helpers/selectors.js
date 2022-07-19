@@ -9,6 +9,7 @@ export function getAppointmentsForDay(state, day) {
       aptNumArr = data.appointments;
     }
   });
+  
 
   aptNumArr.forEach((apt) => {
     if (state.appointments[apt]) {
@@ -47,4 +48,19 @@ export function getInterviewersForDay(state, day) {
 
   return interviewersForDay;
 }
+
+export function changeSpots(state,day,flag) {
+
+  const newDays = [];
+
+  for (const i of state.days) {
+    if (i.name === day && flag === true) {
+      newDays.push({index: i.id-1, spots: i.spots-1})
+    }
+    if (i.name === day && flag === false) {
+      newDays.push({index: i.id-1, spots: i.spots+1})
+    } 
+  }
+  return newDays;
+};
 
