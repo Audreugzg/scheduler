@@ -17,6 +17,7 @@ const DELETING = "DELETING";
 const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
+const ERROR_CREATE = "ERROR_CREATE";
 const CONFIRMING = "CONFIRMING";
 
 export default function Appointment(props) {
@@ -26,6 +27,11 @@ export default function Appointment(props) {
   );
 
   function save(name, interviewer) {
+    // if (name === "" || interviewer === null) {
+    //   // console.log("in here");
+    //   transition(SAVING);
+    //   return transition(ERROR_CREATE, true);
+    // }
     const interview = {
       student: name,
       interviewer
@@ -86,14 +92,14 @@ export default function Appointment(props) {
           onCancel={() => back()}
         />
       )}
-      {mode === SAVING && <Status message="saving"/>}
+      {mode === SAVING && <Status message="saving" />}
       {mode === DELETING && (
         // <Confirm
         //   message="Are you sure you would like to delete?"
         //   onConfirm={() => deleteInterview(props.id)}
         //   onCancel={() => transition(SHOW)}
         // />
-        <Status message="deleting"/>
+        <Status message="deleting" />
       )}
       {mode === CONFIRMING && (
         <Confirm
@@ -127,6 +133,15 @@ export default function Appointment(props) {
           message={"Something went wrong on deletion"}
           onClose={() => {
             back(2);
+          }}
+        />
+      )}
+
+      {mode === ERROR_CREATE && (
+        <Error
+          message={"Both name and interviewer filed need to be filled up"}
+          onClose={() => {
+            back(1);
           }}
         />
       )}

@@ -25,8 +25,9 @@ export default function useApplicationData(props){
           ...state.days[index],
           spots: spots,
         };
-         state.days[index] = day;
-         const days = [...state.days];
+        let newDay = [...state.days]
+        newDay[index] = day;
+        const days = [...newDay];
 
         // console.log("days",days);
         // days = Object.values(days);
