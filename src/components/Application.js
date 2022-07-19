@@ -11,23 +11,32 @@ import DayList from "./DayList";
 export default function Application(props) {
   function bookInterview(id, interview) {
     console.log(id, interview);
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview },
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment,
-    };
+    // const appointment = {
+    //   ...state.appointments[id],
+    //   interview: { ...interview },
+    // };
+    // const appointments = {
+    //   ...state.appointments,
+    //   [id]: appointment,
+    // };
     
     return axios
       .put(`/api/appointments/${id}`, { interview })
       .then((res) => {
+        // setState({ ...state, appointments });
+        const appointment = {
+          ...state.appointments[id],
+          interview: { ...interview },
+        };
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment,
+        };
         setState({ ...state, appointments });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      // .catch((err) => {
+      //   console.log(err);
+      // });
   }
   
   const [state, setState] = useState({
@@ -45,9 +54,9 @@ export default function Application(props) {
         newState.appointments[id].interview = null;
         setState(newState);
       })
-      .catch((err) => {
-        console.log("err");
-      });
+      // .catch((err) => {
+      //   console.log("err");
+      // });
   }
 
   function editInterview(id, interview) {

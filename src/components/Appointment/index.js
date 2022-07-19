@@ -6,6 +6,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY = "EMPTY";
@@ -14,6 +15,9 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
+const CONFIRMING = "CONFIRMING";
 
 export default function Appointment(props) {
 
@@ -28,23 +32,35 @@ export default function Appointment(props) {
     };
     // props.bookInterview(props.id, interview);
     transition(SAVING);
-    props.bookInterview(props.id, interview).then(() => {
-      transition(SHOW);
-    });
+    props.bookInterview(props.id, interview)
+      .then(() => {
+        transition(SHOW);
+      })
+      .catch(error => transition(ERROR_SAVE, true));
   }
 
   function deleteInterview(id) {
-    transition(SAVING);
-    props.cancelInterview(props.id).then(() => {
-      transition(EMPTY);
-    });
+    // transition(SAVING);
+    // props.cancelInterview(props.id).then(() => {
+    //   transition(EMPTY);
+    // });
+    transition(DELETING, true);
+    props
+      .cancelInterview(id)
+      .then(() => {
+        transition(EMPTY);
+      })
+      .catch(() => {
+        transition(ERROR_DELETE, true);
+      });
   }
 
   function confirm() {
-    transition(DELETING);
+    // transition(DELETING);
+    transition(CONFIRMING);
   }
 
-  function editInterview(id) {
+  function editInterview() {
     transition(EDIT);
   }
 
@@ -70,8 +86,16 @@ export default function Appointment(props) {
           onCancel={() => back()}
         />
       )}
-      {mode === SAVING && <Status />}
+      {mode === SAVING && <Status message="saving"/>}
       {mode === DELETING && (
+        // <Confirm
+        //   message="Are you sure you would like to delete?"
+        //   onConfirm={() => deleteInterview(props.id)}
+        //   onCancel={() => transition(SHOW)}
+        // />
+        <Status message="deleting"/>
+      )}
+      {mode === CONFIRMING && (
         <Confirm
           message="Are you sure you would like to delete?"
           onConfirm={() => deleteInterview(props.id)}
@@ -87,6 +111,23 @@ export default function Appointment(props) {
           onCancel={() => back()}
           student={props.interview.student}
           interviewer={props.interview.interviewer.id}
+        />
+      )}
+
+      {mode === ERROR_SAVE && (
+        <Error
+          message={"Something went wrong on creation"}
+          onClose={() => {
+            back(2);
+          }}
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error
+          message={"Something went wrong on deletion"}
+          onClose={() => {
+            back(2);
+          }}
         />
       )}
 
