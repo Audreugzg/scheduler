@@ -5,8 +5,10 @@ Build and test a React application that allows users to book and cancel intervie
 ## Final Product
 
 !["Homepage"](./docs/Homepage.png)
+
 !["create"](./docs/creat.png)
-!["delete"](./img/delete.png)
+
+!["delete"](./docs/delete.png)
 
 ## Setup
 
