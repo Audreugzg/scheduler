@@ -4,10 +4,13 @@ Build and test a React application that allows users to book and cancel intervie
 
 ## Final Product
 
+### Home Page
 !["Homepage"](./docs/Homepage.png)
 
+### Create an new appointment
 !["create"](./docs/creat.png)
 
+### Delete an appointment
 !["delete"](./docs/delete.png)
 
 ## Setup
