@@ -1,5 +1,13 @@
 # Interview Scheduler
 
+Build and test a React application that allows users to book and cancel interviews. Combine a concise API with a WebSocket server to build a realtime experience.
+
+## Final Product
+
+!["Homepage"](./docs/Homepage.png)
+!["create"](./docs/creat.png)
+!["delete"](./img/delete.png)
+
 ## Setup
 
 Install dependencies with `npm install`.
