@@ -8,6 +8,7 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
+import { useState } from "react";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -21,10 +22,11 @@ const ERROR_CREATE = "ERROR_CREATE";
 const CONFIRMING = "CONFIRMING";
 
 export default function Appointment(props) {
-
+  
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+  const [newInterview, setNewInterview] = useState(false);
 
   function save(name, interviewer) {
     // if (name === "" || interviewer === null) {
@@ -38,7 +40,7 @@ export default function Appointment(props) {
     };
     // props.bookInterview(props.id, interview);
     transition(SAVING);
-    props.bookInterview(props.id, interview)
+    props.bookInterview(props.id, interview, newInterview)
       .then(() => {
         transition(SHOW);
       })
@@ -68,15 +70,21 @@ export default function Appointment(props) {
 
   function editInterview() {
     transition(EDIT);
+    setNewInterview(false);
+  }
+
+  function onAdd() {
+    transition(CREATE)
+    setNewInterview(true);
   }
 
 
 
 
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
-      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      {mode === EMPTY && <Empty onAdd={onAdd} />}
       {mode === SHOW && (
         <Show
           name={props.interview.student}
@@ -92,14 +100,14 @@ export default function Appointment(props) {
           onCancel={() => back()}
         />
       )}
-      {mode === SAVING && <Status message="saving" />}
+      {mode === SAVING && <Status message="Saving" />}
       {mode === DELETING && (
         // <Confirm
         //   message="Are you sure you would like to delete?"
         //   onConfirm={() => deleteInterview(props.id)}
         //   onCancel={() => transition(SHOW)}
         // />
-        <Status message="deleting" />
+        <Status message="Deleting" />
       )}
       {mode === CONFIRMING && (
         <Confirm

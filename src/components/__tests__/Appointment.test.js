@@ -13,16 +13,14 @@ import PropTypes from 'prop-types';
 /*
   We import the component that we are testing
 */
-import Application from "components/Application";
+// import Application from "components/Application";
 import Appointment from "components/Appointment";
 
 /*
   A test that renders a React Component
 */
 
-it("renders without crashing", () => {
-  render(<Application />);
-});
+
 
 describe("Appointment", () => {
   it("renders without crashing", () => {
